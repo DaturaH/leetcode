@@ -1,0 +1,29 @@
+/*
+
+Write a function to find the longest common prefix string amongst an array of strings.
+
+*/
+
+
+public class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        if(strs == null || strs.length < 1){
+        	return new String();
+        }
+        String prefix = strs[0];
+        for(int i = 1 ; i < strs.length ; i++){
+        	if(strs[i] == null || strs[i].length() < 1){
+        		return new String();
+        	}
+        	int length = prefix.length() < strs[i].length() ? prefix.length() : strs[i].length();
+        	int j ;
+        	for(j = 0 ; j < length ; j ++){
+        		if(prefix.charAt(j) != strs[i].charAt(j)){
+        			break;
+        		}
+        	}
+        	prefix = prefix.substring(0, j);
+        }
+        return prefix;
+    }
+}
