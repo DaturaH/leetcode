@@ -1,0 +1,59 @@
+/*
+
+Implement strStr().
+
+Returns the index of the first occurrence of needle in haystack, or -1 if needle is not part of haystack.
+
+*/
+
+
+public class Solution {
+    public int strStr(String haystack, String needle) {
+        if(haystack == null || haystack.length() < 1){
+        	return (needle == null || needle.length() < 1) ? 0 : -1;
+        }
+        if(needle == null || needle.length() < 1){
+        	return 0;
+        }
+        return getIndexOf(haystack , needle); 
+     }
+    public int getIndexOf(String s , String m){
+    	if(s == null || m == null || s.length() < 1 || m.length() < 1){
+    		return -1;
+    	}
+    	int si = 0;
+    	int mi = 0;
+    	int [] next = getNextArray(m);
+    	while(si < s.length() && mi < m.length()){
+    		if(s.charAt(si) == m.charAt(mi)){
+    			si++;
+    			mi++;
+    		}else if(next[mi] == -1){
+    			si++;
+    		}else{
+    			mi = next[mi];
+    		}
+    	}
+    	return mi == m.length() ? si - mi : -1;
+    }
+    public int[] getNextArray(String m){
+    	if(m == null || m.length() <= 1){
+    		return new int[]{-1};
+    	}
+    	int [] next = new int[m.length()];
+    	int pos = 2;
+    	int cn = 0;
+    	next[0] = -1;
+    	next[1] = 0;
+    	while(pos < m.length()){
+    		if(m.charAt(pos - 1) == m.charAt(cn)){
+    			next[pos++] = ++cn;
+    		}else if(cn > 0){
+    			cn = next[cn];
+    		}else{
+    			next[pos++] = 0;
+     		}
+    	}
+    	return next;
+    }
+}
